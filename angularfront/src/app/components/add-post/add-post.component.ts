@@ -13,7 +13,7 @@ export class AddPostComponent implements OnInit {
     title: "",
     description: "",
     published: false
-  };
+  }
 
   submitted = false;
 
