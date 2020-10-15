@@ -1,5 +1,5 @@
 <div class="card">
-  <div *ngIf="!submitted">
+  <div>
     <div class="card-header">Listar</div>
     <div class="card-body">
       <form>
@@ -10,25 +10,25 @@
         <h4>Listagem Posts</h4>
 
         <ul class="list-group">
-          <li class="list-group-item"
-          *ngFor="let post of posts; let i =index"
-          [class.ative]="i == currentIndex"
-          (click)="setActivePost(post, i)">{{ post.title }}</li>
+          <li class="list-group-item" *ngFor="let post of posts; let i =index" [class.ative]="i == currentIndex"
+            (click)="setActivePost(post, i)">{{ post.title }}</li>
         </ul>
 
         <button (click)="removeAllPosts" class="btn btn-danger">Remover todas as postagens</button>
 
-        <div>
-          <label>Descrição:</label>
-          {{ currentPost.description }}
-        </div>
+        <div *ngIf="currentPost">
+          <div>
+            <label>Descrição:</label>
+            {{ currentPost.description }}
+          </div>
 
-        <div>
-          <label>Situação:</label>
-          {{ currentPost.published ? "Publicado" : "Pendente"}}
-        </div>
+          <div>
+            <label>Situação:</label>
+            {{ currentPost.published ? "Publicado" : "Pendente"}}
+          </div>
 
-        <a class="btn btn-success" routerLink="/posts/{{ currentPost.id }}">Editar</a>
+          <a class="btn btn-success" routerLink="/posts/{{ currentPost.id }}">Editar</a>
+        </div>
 
         <div *ngIf="!currentPost">
           <p>Selecione uma postagem</p>
