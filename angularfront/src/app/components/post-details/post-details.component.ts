@@ -69,6 +69,7 @@ export class PostDetailsComponent implements OnInit {
     this.postService.update(this.currentPost.id, data)
     .subscribe(
       response => {
+        this.currentPost.published = status;
         console.log(response);
       },
       error => {

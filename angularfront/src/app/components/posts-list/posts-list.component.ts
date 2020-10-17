@@ -1,82 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
-import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
-  selector: 'app-post-details',
-  templateUrl: './post-details.component.html',
-  styleUrls: ['./post-details.component.css']
+  selector: 'app-posts-list',
+  templateUrl: './posts-list.component.html',
+  styleUrls: ['./posts-list.component.css']
 })
-export class PostDetailsComponent implements OnInit {
-  currentPost = null;
-  message = '';
+export class PostsListComponent implements OnInit {
 
-  constructor(
-    private postService: PostService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+  posts: any;
+  title = '';
+  currentPost = null;
+  currentIndex = -1;
+
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.message = "";
-    this.getPost(this.route.snapshot.paramMap.get('id'));
+    this.retrievePosts();
   }
 
-  getPost(id): void {
-    this.postService.get(id)
-    .subscribe(
-      data => {
-        this.currentPost = data;
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      });
-    }
-
-    updatePost(): void {
-      this.postService.update(this.currentPost.id, this.currentPost)
+  retrievePosts(): void {
+    this.postService.getAll()
       .subscribe(
-        response => {
-          console.log(response);
-          this.message = 'Esta postagem foi atualizada com sucesso.';
+        data => {
+          this.posts = data;
+          console.log(data);
         },
         error => {
           console.log(error);
         });
-    }
+  }
 
-    deletePost(): void {
-      this.postService.delete(this.currentPost.id)
+  refreshList(): void {
+    this.retrievePosts();
+    this.currentIndex = -1;
+    this.currentPost = null;
+  }
+
+  setActivePost(post, index): void {
+    this.currentPost = post;
+    this.currentIndex = index;
+  }
+
+  removeAllPosts(): void {
+    this.postService.deleteAll()
       .subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/posts']);
+          this.retrievePosts();
         },
         error => {
           console.log(error);
         });
-    }
+  }
 
-
-    updatePublished(): void {
-
-      const data = {
-        title: this.currentPost.title,
-        description: this.currentPost.description,
-        published: status
-      };
-
-      this.postService.update(this.currentPost.id, data)
+  searchTitle(): void {
+    this.postService.findByTitle(this.title)
       .subscribe(
-        response => {
-          console.log(response);
+        data => {
+          this.posts = data;
+          console.log(data);
         },
         error => {
           console.log(error);
         });
-    }
-
+  }
 
 
 }
