@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { PostsListComponent } from './components/posts-list/posts-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PostsListComponent } from './components/posts-list/posts-list.component
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
